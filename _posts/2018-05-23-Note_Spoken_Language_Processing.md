@@ -20,7 +20,7 @@ grammar_cjkRuby: true
 6. Speech Signal Representations
 7. Speech Coding  
 **PART III: SPEECH RECOGNITION**
-8. [Hidden Markov Models](/bookNotes/spoken_language_processing/chapter8_hidden_markow_models.ipynb)
+8. [Hidden Markov Models](http://nbviewer.jupyter.org/github/xingui/book_notes/blob/master/spoken_language_processing/chapter8_hidden_markow_models.ipynb#)
 9. Acoustic Modeling
 10. Environmental Robustness
 11. Language Modeling
