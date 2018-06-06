@@ -54,17 +54,17 @@ grammar_cjkRuby: true
 
 对于某一个树节点，它的对数似然为：
 
-$$ L(S) = \sum_{s \in S} \sum_{f in F} log(P(o_f; \mu(S), \Sigma(S))) \gamma_s(o_f)$$
+$$ L(S) = \sum_{s \in S} \sum_{f \in F} log(P(o_f; \mu(S), \Sigma(S))) \gamma_s(o_f)$$
 
 其中 \\(S\\) 是某树节点的状态池，\\(F\\)是对应的训练数据，\\(\mu(S)\\)和\\(\Sigma(S)\\)是状态的均值和方差，\\(\gamma_s(o_f)\\)是观测值\\(o_f\\)由状态\\(s\\)生成的后验概率（即state occupation probability）。
 
 当 P服从高斯分布时：
 
-$$ L(S) =-\frac{1}{2}(log(|(2\pi)^n||\Sigma(S)|)+n) \sum_{s \in S} \sum_{f in F} \gamma_s(o_f)$$
+$$ L(S) =-\frac{1}{2}(log(|(2\pi)^n||\Sigma(S)|)+n) \sum_{s \in S} \sum_{f \in F} \gamma_s(o_f)$$
 
 如果 \\(S\\) 要分裂为两个子节点\\(S_y(q)\\) 和\\(S_n(q)\\)，那么需要通过最大化下式，找到最佳的 question q*.
 
-$$\delta L_q = L(S_y(q)) + L(S_n(q)) - L(S)$$
+$$\Delta L_q = L(S_y(q)) + L(S_n(q)) - L(S)$$
 
 
 # 3 总结
