@@ -21,7 +21,7 @@ grammar_cjkRuby: true
 7. Speech Coding  
 **PART III: SPEECH RECOGNITION**
 8. [Hidden Markov Models](http://nbviewer.jupyter.org/github/xingui/book_notes/blob/master/spoken_language_processing/chapter8_hidden_markow_models.ipynb#)
-9. Acoustic Modeling
+9. [Acoustic Modeling](http://nbviewer.jupyter.org/github/xingui/book_notes/blob/master/spoken_language_processing/9_Acoustic_Modeling.ipynb#)
 10. Environmental Robustness
 11. Language Modeling
 12. Basic Search Algorithms
