@@ -377,7 +377,7 @@ han: false
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 94791ad8bd16ac9d873f17695dca77e3
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -437,7 +437,7 @@ gitalk:
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-#google_site_verification:
+google_site_verification: tOKDZYNu7EL5puxKxiYMJz0Vmq1OVexpdMbZ3hr_fMc
 
 # Google Analytics
 #google_analytics:
@@ -525,7 +525,7 @@ busuanzi_count:
 
 
 # Tencent analytics ID
-# tencent_analytics:
+# tencent_analytics: 65903419
 
 # Tencent MTA ID
 # tencent_mta:
