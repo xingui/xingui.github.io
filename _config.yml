@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------
 
 # Site
-title: Hakka
+title: Hakka's Blog
 subtitle:
 description: Life is too short, don't live the same day twice.
 author: Hakka
@@ -354,6 +354,10 @@ custom_logo:
 # https://github.com/chriskempson/tomorrow-theme
 highlight_theme: normal
 
+# reward setting
+reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
+wechatpay: /uploads/wechat_pay.jpg
+alipay: /uploads/alipay.jpg
 
 # ---------------------------------------------------------------
 # Third Party Services Settings
@@ -381,7 +385,7 @@ han: false
 # Disqus
 disqus:
   enable: true
-  shortname:
+  shortname: xingui-github-io
   count: true
   # hide comments (visitors need to click to load the comments)
   # count need to be false when hide is true
@@ -560,7 +564,7 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: false
+  enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
