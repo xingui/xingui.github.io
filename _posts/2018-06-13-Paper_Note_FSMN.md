@@ -2,7 +2,7 @@
 layout: post
 title: "Paper Note Feedforward sequential memory networks (FSMN)"
 date: 2018-06-13
-categories: Paper Note
+categories: 论文笔记
 tags: [Feedforwrd, Neural Network, RNN, FSMN]
 grammar_cjkRuby: true
 ---
