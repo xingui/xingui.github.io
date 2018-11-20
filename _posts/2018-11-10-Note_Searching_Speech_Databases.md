@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "笔记: Searching Speech Databased - Features, Techniques and Evaluation Measures"
+title: "笔记: Searching Speech Databases - Features, Techniques and Evaluation Measures"
 date: 2018-11-10
 categories: 读书笔记
 tags: [语音识别, ASR, KWS]
