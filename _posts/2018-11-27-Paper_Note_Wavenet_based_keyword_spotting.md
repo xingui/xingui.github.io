@@ -34,7 +34,9 @@ $$
 <img src="/images/wavenet_keyword_spotting/1_2.png" width="50%" height="50%" />
 </p>
 
-在 PixelRNN 中，作者采用了12个二维 LSTM，
+在 PixelRNN 中，作者采用了12个二维 LSTM layer，并且论文中对 LSTM layer 提出了两种不同的结构：Row LSTM 和 BiLSTM。
+## 2.1 Row LSTM
+
 
 # 3. Gated PixelCNN
 
