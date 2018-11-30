@@ -8,7 +8,7 @@ grammar_cjkRuby: true
 ---
 
 # 1. Overview
-[Snips](https://www.baidu.com/link?url=71r7macqyrkGTnFqtQh42KCKS7oU6uaLTVUKXNLMR5e&wd=&eqid=fe9d06200000ca0f000000045bfd6681)团队在《Efficient keyword spotting using dilated convolutions and gating》这篇论文中采用 wavenet 这一生成模型来做 Keyword spotting(Wakeup word detection)，得到了非常不错的结果，如下图：
+[Snips](https://snips.ai/)团队在《Efficient keyword spotting using dilated convolutions and gating》这篇论文中采用 wavenet 这一生成模型来做 Keyword spotting(Wakeup word detection)，得到了非常不错的结果，如下图：
 <p align="center">
 <img src="/images/wavenet_keyword_spotting/1_1.png" width="75%" height="75%" />
 </p>
@@ -69,7 +69,7 @@ $$
 </p>
 那么它是怎么做到的呢？
  
-首先它采用了\\(1\times 2\\) 大小的卷积核，并且对于\\(n\times n\\) 的图像，从上到下，每一行各往右移一个像素，图像大小由此变为\\(n \times 2n\\)，那么对于正向的 LSTM 而言，它的 receptive field 如下图：
+首先它采用了\\(1\times 2\\)大小的卷积核，并且对于\\(n\times n\\)的图像，从上到下，每一行各往右移一个像素，图像大小由此变为\\(n \times 2n\\)，那么对于正向的 LSTM 而言，它的 receptive field 如下图：
 <p align="center">
 <img src="/images/wavenet_keyword_spotting/2_5.png" width="50%" height="50%" />
 </p>
@@ -82,13 +82,13 @@ $$
 
 
 ## 2.3 PixelCNN
-PixelCNN 中，只用当前的 feature map 参与当前像素点的估计，因此其训练过程可以很好的并行训练，加速训练过程。但其也存在盲点（尽管加大卷积核的大小以及增加卷积的层数，可以再一定程度上缓解这个问题），以\\(3\times 3\\）的卷积核为例，其 receptive field 如下图：
+PixelCNN 中，只用当前的 feature map 参与当前像素点的估计，因此其训练过程可以很好的并行训练，加速训练过程。但其也存在盲点（尽管加大卷积核的大小以及增加卷积的层数，可以再一定程度上缓解这个问题），以\\(3\times 3\\)的卷积核为例，其 receptive field 如下图：
 <p align="center">
 <img src="/images/wavenet_keyword_spotting/2_6.png" width="20%" height="20%" />
 </p>
 
 ## 2.4  其他
-为了训练更深的网络，作者借鉴了深度残差网络(ResNet) 的结果，第每一层都采用了 bypass，如下图：
+为了训练更深的网络，作者借鉴了深度残差网络(ResNet) 的结构，第每一层都采用了 bypass，如下图：
 <p align="center">
 <img src="/images/wavenet_keyword_spotting/2_7.png" width="50%" height="50%" />
 </p>
@@ -150,11 +150,57 @@ $$
 **应用上述优化后，Gated PixelCNN 的性能基本上就接近于 PixelRNN 了**。
 
 # 4. WaveNet
+图像上的成功应用之后，DeepMind 团队在《WaveNet: A generative model for raw audio》中将生成模型用于语音信号的生成，类似的，就是对以下分布进行建模：
 
+$$
+p(x) = \prod_{t=1}^{T}p(x_t|x_1, ..., x_t-1)
+$$
+
+将PixelCNN用于语音信号的生成存在一个问题：**图像大小有限，用一个与图像一样大小的卷积核就看到历史的所有信息，而对于长时语音信号来说，要得到历史的所有信息几乎是不可能的。**为此，论文中的gated PixelCNN做了两点改进：
+1. 使用一维卷积，并且为了保证只提取到历史语音数据的信息，并没有采用mask的方式，而是采用了因果卷积(causal convolution)。
+2. 为了看到尽可能多的历史数据，并且减小计算量，采用了空洞卷积(dilated convolution)。
+因此其卷积过程如下图：
+<div align="center">
+<img src="/images/wavenet_keyword_spotting/4_1.gif" width="70%" height="60%" />
+</div>
+Gated PixeCNN中的门结构以及bypass connection在wavenet中也使用了，同时增加了skip connection用于语音信号的生成，最终的网络结构如下图：
+<div align="center">
+<img src="/images/wavenet_keyword_spotting/4_2.png" width="75%" height="70%" />
+</div>
+**通过多个dilated cnn layer 的级联，可以将非常长的历史数据用于当前语音数据的生成**。另外对于TTS来说，有text文本作为先验的数据，因此conditional wavenet也继承conditional gated PixelCNN中的实现，将先验知识加入到门结构激活函数的计算中：
+
+$$
+z = \tanh (W_{f,k}*x + V_{f,k}^{T}h) \odot \sigma(W_{g,k}*x + V_{g,k}^{T}h)
+$$
+
+Wavenet在生成语音数据时，依然只能串行生成，速度非常慢。因此后面又有两篇论文《Fast wavenet generation algorithm》和《Parallel WaveNet: Fast high-fidelity speech synthesis》对其进行了优化加速。
 
 # 5. Wavenet for Keyword Spotting
+Wavenet 在TTS领域内取得了巨大的成功，也被用在了其他一些领域，比如VAD(Voice activity detection)。Snips团队首次将其用于Keyword spotting，并得到了不错的结果。
 
-# 6. Result & Analysis
+## 5.1 改进
+在具体的实现中，相比于Wavenet有以下几点调整：
+* 模型结构基本上沿用了Wavenet的结构，只是在Dilated causal convolution layers的参数上有所调整
+* 输入从语音的raw data变为了20维的MFCC特征(extracted from the input audio every 10ms over a window of 25ms)
+* 输出直接是类别信息(1: keyword, 0: non-keyword)
+* **在数据的label上，并没有把keyword所对应的frames全部标注成 1，而是以EOS(end of speech)为中心，左右两边\\(\Delta t\\)范围内的数据标注为 1， 这样可以显著的减少FA。**
+
+## 5.2 Results & Analysis
+在如下图所示的数据集上，
+<div align="center">
+<img src="/images/wavenet_keyword_spotting/5_1.png" width="40%" height="40%" />
+</div>
+相比于CNN 和 LSTM，性能得到了大幅提升。
+<div align="center">
+<img src="/images/wavenet_keyword_spotting/5_2.png" width="90%" height="90%" />
+</div>
+
+
+wavenet 在keyword spotting这个任务上的性能也能这么优越，我觉得主要有以下几个原因：
+1. **多个Dilated causal convolution layers级联，它的left context非常长，甚至可以看到整个keyword**
+2. **Gated activation 可以对更复杂的数据进行建模，使其在噪声环境下可以由更好的鲁棒性。**
+3. **Label。精细调整的label，可以抑制FA，尤其是那种只包含keyword片段的speech导致的FA。**
+
 
 
 # Reference
@@ -163,5 +209,9 @@ $$
 [3] Van Den Oord A, Dieleman S, Zen H, et al. WaveNet: A generative model for raw audio[C]//SSW. 2016: 125.   
 [4] Paine T L, Khorrami P, Chang S, et al. Fast wavenet generation algorithm[J]. arXiv preprint arXiv:1611.09482, 2016.   
 [5] Oord A, Li Y, Babuschkin I, et al. Parallel WaveNet: Fast high-fidelity speech synthesis[J]. arXiv preprint arXiv:1711.10433, 2017.   
-[6] Coucke A, Chlieh M, Gisselbrecht T, et al. Efficient keyword spotting using dilated convolutions and gating[J]. arXiv preprint arXiv:1811.07684, 2018.*
+[6] Coucke A, Chlieh M, Gisselbrecht T, et al. Efficient keyword spotting using dilated convolutions and gating[J]. arXiv preprint arXiv:1811.07684, 2018.   
+[7] [WaveNet: A Generative Model for Raw Audio](https://deepmind.com/blog/wavenet-generative-model-raw-audio/)    
+[8] [High-fidelity speech synthesis with WaveNet](https://deepmind.com/blog/high-fidelity-speech-synthesis-wavenet/)    
+*
+
 
