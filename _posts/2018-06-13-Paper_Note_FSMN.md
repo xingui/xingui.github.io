@@ -40,7 +40,7 @@ $$\tilde{h_t^l} = \sum_{i=0}^{N_1} a_i^l \odot h_{t-i}^l + \sum_{j=0}^{N_2} c_j^
 $$h_t^{l+1} = f(Wh_t^l + \tilde{W}\tilde{h_t^l} + b^l)$$
 
 ## 2.2 训练
-以 N 阶 scalar FSMN 为例，memory block 会有 \\(N+1\\)个参数：\\{a_0, a_1, a_2, ..., a_N}\\)。给定一个长度为\\(T\\)的序列输入\\(X\\)时，我们可以构造一个\\(T \times T\\)的参数矩阵\\(M\\)：
+以 N 阶 scalar FSMN 为例，memory block 会有 \\(N+1\\)个参数：\\({a_0, a_1, a_2, ..., a_N}\\)。给定一个长度为\\(T\\)的序列输入\\(X\\)时，我们可以构造一个\\(T \times T\\)的参数矩阵\\(M\\)：
 
 $$
 M=\left[
@@ -76,7 +76,7 @@ $$
 
 $$\tilde{H} = H M$$
 
-其中\\(H\\)表示隐层的序列输出，\\(\tilde{H}\\)表示 memory block 的序列输出。因此，对于一个 mini-batch \\(L={X_1, X_2, ..., X_K}\)，memory block 的输出为：
+其中\\(H\\)表示隐层的序列输出，\\(\tilde{H}\\)表示 memory block 的序列输出。因此，对于一个 mini-batch \\(L={X_1, X_2, ..., X_K}\\)，memory block 的输出为：
 
 $$\tilde{H} = [H_1, H_2, ..., H_K]\left[
 \begin{matrix}
