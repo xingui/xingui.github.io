@@ -38,7 +38,7 @@ $$
 $$
 \begin{align}
 \begin{split}
-SNR_{inst}(p,k) &= \dfrac{|X(p,k)|^2-E[|S(p,k)|^2]}{E[|N(p,k)|^2]}   \\
+SNR_{inst}(p,k) &= \dfrac{|X(p,k)|^2-E[|N(p,k)|^2]}{E[|N(p,k)|^2]}   \\
                 &=SNR_{post}(p,k) -1
 \end{split}
 \end{align}
@@ -85,7 +85,7 @@ $$
  
  其中，\\(P[.]\\) denotes the half-wave rectification, \\(\beta\\)一般取\\(0.98\\).
 
- 选择维纳滤波器作为增益函数，那么有
+ 选择维纳滤波器(**参考附录维纳滤波器的传递函数**)作为增益函数，那么有
  
  $$
  \begin{align}
@@ -135,3 +135,72 @@ $$
   \hat{S}(p,k)=G_{TSNR}(p,k)X(p,k)
 \end{align}
 $$
+
+# Appendix
+## 1. Wiener Filter(Copy from ref[2])
+已知一个含噪信号
+
+$$
+x = s + v
+$$
+
+设计一个滤波器\\(h\\),
+
+<p align="center">
+<img src="/images/papernote_tsnr/appendix_1.png" width="50%" height="50%" />
+</p>
+
+使得输出\\(y=\hat{s}\\)尽可能的接近原始信号\\(s\\)，用均方误差分析的话，希望其数学期望最小
+
+$$
+E\{e^2\}=E\{(s-x*h)^2\}
+$$
+
+在离散域内对上式的\\(h\\)求导
+
+$$
+\begin{align*}
+\frac{\partial{E\{e^2\}}}{\partial{h}} &= 2E\{[\sum_m h(m)x(n-m) - s(n)]\sum_j x(n-j)\} \\
+                                       &=2E\{\sum_m h(m) \sum_j x(n-j)x(n-m) - \sum_j s(n)x(n-j)\}  \\
+                                       &=2\sum_m h(m) E\{\sum_j x(n-j)x(n-m)\} - 2E\{\sum_j s(n)x(n-j)\}    \\
+                                       &=2\sum_m h(m)R_{xx}(j-m) - 2R_{xs}(j)
+\end{align*}
+$$
+
+令导数为0，得到
+
+$$
+R_{xs}(j)=\sum_m h(m)R_{xx}(j-m) \qquad j \geq 0
+$$
+
+这就是微纳霍夫方程。另外由数理统计知识可求得
+
+$$
+\begin{align*}
+R_{xs}(m) &= R_{ss}(m) + R_{vs}(m)    \\
+R_{xx}(m) &= R_{ss}(m) + R_{sv}(m) + R_{vs}(m) + R_{vv}(m)
+\end{align*}
+$$
+
+其中\\(R\\)为自相关函数。如果\\(s\\)与\\(v\\)互相独立，那么
+
+$$
+\begin{align*}
+R_{xs}(m) &= R_{ss}(m)    \\
+R_{xx}(m) &= R_{ss}(m) + R_{vv}(m)
+\end{align*}
+$$
+
+如果将维纳霍夫方程进行\\(z\\)变换的话，有
+
+$$
+H(z) = \frac{P_{xs}(z)}{P_{xx}(z)}=\frac{P_{ss}(z)}{P_{ss}(z)+P_{vv}(z)}
+$$
+
+由此可知，但噪声为0时，\\(H(z)=1\\)，当信号为0时，\\(H(z)=0\\)，因此它优于一般的线性滤波器。
+
+
+# Reference
+*[1] [Improved Signal-to-Noise Ratio Estimation for Speech Enhancement](https://hal.inria.fr/inria-00450766/document)    *
+*[2] [维纳滤波原理（Wiener Filter）](https://zhuanlan.zhihu.com/p/20850601)*
+
