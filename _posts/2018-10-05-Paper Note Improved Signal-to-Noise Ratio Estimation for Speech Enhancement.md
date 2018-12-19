@@ -201,6 +201,6 @@ $$
 
 
 # Reference
-*[1] [Improved Signal-to-Noise Ratio Estimation for Speech Enhancement](https://hal.inria.fr/inria-00450766/document)    *
-*[2] [维纳滤波原理（Wiener Filter）](https://zhuanlan.zhihu.com/p/20850601)*
+*[1] [Improved Signal-to-Noise Ratio Estimation for Speech Enhancement](https://hal.inria.fr/inria-00450766/document)      
+[2] [维纳滤波原理（Wiener Filter）](https://zhuanlan.zhihu.com/p/20850601)*
 
