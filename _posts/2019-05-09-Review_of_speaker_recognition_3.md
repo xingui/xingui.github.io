@@ -80,6 +80,8 @@ PLDA是一个概率生成模型，为了解决人脸识别的问题而提出。�
 
 Reference [6]中将上述三种PLDA统一到了同一框架中，并实验验证Two-Covariance对声纹具有最好的性能
 
+本文的讨论的主要是Reference [6]中提出的PLDA(Two Covariance PLDA，kaldi中采用的版本). 在介绍PLDA前，先简单介绍下LDA.
+
 ### 2.1 LDA
 LDA 假设数据服从高斯分布，并且各类的协方差相同。各类的先验概率为\\(\pi_k\\)，且
 
@@ -115,7 +117,7 @@ $$
 
 LDA还可以对数据进行降维，但它无法出类训练数据中未出现的类别数据。
 
-#### 2.2 Two Covariance PLDA
+### 2.2 Two Covariance PLDA
 如果把类别\\(\boldsymbol{y}\\)当作隐变量，对其进行建模，就可以处理未知类别的样本数据。
 
 $$
@@ -152,7 +154,7 @@ $$
 
 其中，\\(\Psi\\)反映类间差异，\\(I\\)反映类内差异
 
-##### 2.2.1 Evaluation
+#### 2.2.1 Evaluation
 对每个观测变量\\(x\\)，可以先做变换得到
 
 $$
@@ -208,14 +210,38 @@ $$
 
 更多关于PLDA打分的内容可参考Reference [8]
 
-##### 2.2.2 Training
+#### 2.2.2 Training
 PLDA中，需要估计的参数有\\(A\\), \\(\Psi\\), \\(m\\)。
 * 对于每类样本数相同(若样本数不一致，可做上采样)的场景，可以直接求解。可参考【Reference 6】
 * EM算法，参考【Reference 7】
 
 **之后有时间再补上**
 
-本文的讨论的主要是Reference [6]中提出的PLDA(Two Covariance PLDA，kaldi中采用的版本). 在介绍PLDA前，先简单介绍下LDA.
+##### 2.3 Length Normalization
+经过PLDA变换之后，我们一般还有在做Length Normalization，可以进一步提升性能，为何要做Length Normalization？主要基于以下两点考虑：
+* PLDA基于高斯假设
+* 样本较少时数据服从学生$t$分布，通过whithen和 Length Norm进行补偿。
+
+那么Length Normalization 是如何做的呢？主要分为两步：
+1. Centering and whitening(PLDA变换中已完成)
+
+$$
+			u = A^{-1}(x-m)
+$$
+
+2. Scaling
+
+$$
+			u_{ln} = \frac{u}{||u||}
+$$
+
+or (Kaldi中采用的方式)
+
+$$
+			u_{ln} = \frac{u(\frac{\Psi}{n} + I)}{||u||^2}
+$$
+
+更多可参考【Reference 5,9】
 
 ## Reference
 *[1] [Front-End Factor Analysis for Speaker Verification](http://habla.dc.uba.ar/gravano/ith-2014/presentaciones/Dehak_et_al_2010.pdf)*    
