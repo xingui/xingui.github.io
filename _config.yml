@@ -7,8 +7,7 @@
 title: Xingui's Blog
 subtitle:
 description: Life is too short, don't live the same day twice.
-author: Xingui
-# Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
+language: en
 language: zh-Hans
 date_format: '%Y-%m-%d'
 
@@ -32,7 +31,6 @@ paginate: 10
   #paginate_path: "/page:num/"
 
 # Handling Reading
-# exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "README_en.md"]
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "README_en.md", "vendor"]
 
 # Separator
@@ -89,7 +87,7 @@ keywords: "Jekyll, NexT"
 rss: false
 
 # Specify the date when the site was setup
-since: 2018
+#since: 2015
 
 # icon between year and author @Footer
 authoricon: heart
@@ -237,7 +235,7 @@ social_icons:
 
 # Sidebar Avatar
 # in directory: /assets/images/avatar.gif
-avatar: /uploads/avatar.jpg
+#avatar:
 
 
 # Table Of Contents in the Sidebar
@@ -359,10 +357,6 @@ custom_logo:
 # https://github.com/chriskempson/tomorrow-theme
 highlight_theme: normal
 
-# reward setting
-# reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
-# wechatpay: /uploads/wechat_pay.jpg
-# alipay: /uploads/alipay.jpg
 
 # ---------------------------------------------------------------
 # Third Party Services Settings
@@ -372,9 +366,7 @@ highlight_theme: normal
 mathjax:
   enable: true
   per_page: true
-#  cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
-#  cdn: https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
-  cdn: https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
 
 # Han Support docs: https://hanzi.pro/
 han: false
@@ -383,7 +375,7 @@ han: false
 #swiftype_key:
 
 # Baidu Analytics ID
-baidu_analytics: 94791ad8bd16ac9d873f17695dca77e3
+#baidu_analytics:
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -396,6 +388,32 @@ disqus:
   # hide comments (visitors need to click to load the comments)
   # count need to be false when hide is true
   hide: false
+
+# <wildfire>
+wildfire:
+  enable: false
+  # version - It's recommended to use the following versions.
+  loaderVersion: 1.2.5 # https://www.npmjs.com/package/wildfire-comment
+  useDev: true
+  version: 0.5.6 
+  # database config
+  databaseProvider: firebase # or wilddog
+  firebase: # your firebase config goes here ↓
+    apiKey: 
+    authDomain:
+    databaseURL:
+    projectId:
+    storageBucket:
+    messagingSenderId:
+  wilddog: # your wilddog config goes here ↓
+    siteId:
+  # other configs
+  theme: light # or dark
+  locale: en # or other locales, e.g. zh-CN
+  defaultAvatarURL: 
+# Any question? 
+# Raise an issue here: https://github.com/cheng-kang/wildfire/issues
+# </wildfire>
 
 # Hypercomments
 #hypercomments_id:
@@ -531,7 +549,7 @@ busuanzi_count:
 
 
 # Tencent analytics ID
-# tencent_analytics: 65903419
+# tencent_analytics:
 
 # Tencent MTA ID
 # tencent_mta:
