@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 声纹识别的技术演变(二)
-date: 2019-04-10
+date: 2019-05-08
 categories: 声纹识别
 tags: [声纹识别, JFA]
 grammar_cjkRuby: true
