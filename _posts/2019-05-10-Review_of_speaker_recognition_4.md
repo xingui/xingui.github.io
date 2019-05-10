@@ -88,6 +88,7 @@ grammar_cjkRuby: true
 ## 2.1 实现
 DNN代替GMM在语音识别中取得了比GMM-HMM更好的效果，suppose 在说话人识别中代替GMM也能取得更好的效果。
 1. 在GMM-ivector方案中，ivector的训练和提取主要依赖于充分统计量的计算，即
+
 $$
 \begin{aligned}
 N_k^{(i)} &= \sum_t \gamma_{kt}^{(i)}   \\
